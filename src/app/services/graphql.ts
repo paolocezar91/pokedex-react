@@ -1,11 +1,8 @@
 import request, { RequestDocument } from "graphql-request";
-import { getToken } from "next-auth/jwt";
+import { getToken, JWT } from "next-auth/jwt";
 import { NextRequest } from "next/server";
 import { sign } from "jsonwebtoken";
-// prefer the NextAuth env var but support older AUTH_SECRET in .env.local
-const secret = (process.env.NEXTAUTH_SECRET ||
-  process.env.AUTH_SECRET) as string;
-const isVercel = process.env.ENVIRONMENT !== "local";
+const secret = process.env.AUTH_SECRET as string;
 
 export async function queryGraphql<T>(
   query: RequestDocument,
@@ -27,7 +24,7 @@ export const authorizedQueryGraphql = async <T extends Record<string, unknown>>(
   vars: Record<string, unknown>,
   additionalHeaders?: HeadersInit
 ) => {
-  const headers = await getAuthorizationToken(req, additionalHeaders);
+  const headers = await getAuthHeaders(req, additionalHeaders);
 
   try {
     return await queryGraphql<T>(query, vars, headers);
@@ -42,25 +39,30 @@ export const authorizedQueryGraphql = async <T extends Record<string, unknown>>(
  * @param additionalHeaders
  * @returns
  */
-const getAuthorizationToken = async (
+const getAuthHeaders = async (
   req: NextRequest,
   additionalHeaders: HeadersInit = {}
 ) => {
-  const token = (await getToken({
+  const isVercel = process.env.ENVIRONMENT !== "local";
+  const token = await getToken({
     req,
     secret,
     secureCookie: isVercel,
-    cookieName: !isVercel
-      ? "authjs.session-token"
-      : "__Secure-authjs.session-token",
-  })) as Record<string, unknown> | null;
+    cookieName: isVercel
+      ? "__Secure-authjs.session-token"
+      : "authjs.session-token",
+  });
 
   const headers = token
-    ? {
-        Authorization: `Bearer ${sign(token as object, secret)}`,
-        ...additionalHeaders,
-      }
+    ? getBearerTokenHeader(token, additionalHeaders)
     : additionalHeaders;
 
   return headers;
+};
+
+const getBearerTokenHeader = (token: JWT, additionalHeaders: HeadersInit) => {
+  return {
+    Authorization: `Bearer ${sign(token, secret)}`,
+    ...additionalHeaders,
+  };
 };

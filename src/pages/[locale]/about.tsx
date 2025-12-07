@@ -79,19 +79,18 @@ export default function AboutPage() {
       Github
     </Link>
   ;
-
   return (
     <RootLayout title={title}>
       <div className="h-[inherit] p-4 bg-(--pokedex-red) overflow-auto md:overflow-[initial]">
         <div className="p-4 bg-background rounded shadow-md h-[-webkit-fill-available]">
+          <div className="flex flex-row">
+            <h2 className="mb-3">
+              <strong className="mr-1">PokéNext</strong>
+            </h2>
+            <VersionInfo />
+          </div>
           <p>
-            <span className="flex flex-row">
-              <h2 className="mb-3">
-                <strong className="mr-1">PokéNext</strong>
-              </h2>
-              <VersionInfo />
-            </span>
-            Developed by {me} using {nextJs}, {react}, {graphQL}, {mongoDB},{" "}
+            Developed by {me} using {nextJs}, {react}, {graphQL}, {mongoDB},
             {vercel} and {render} as a project to study and deep dive into
             React's ecosystem. Data was extracted from {pokeApi} project.
           </p>

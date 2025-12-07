@@ -101,6 +101,18 @@
       "title": "{ length } golpes de { type }"
     }
   },
+  "items": {
+    "title": "Items",
+    "category": "Categoria",
+    "cost": "Preço",
+    "attributes": "Atributos",
+    "flingEffect": "Efeito Fling",
+    "flingPower": "Poder Fling",
+    "heldBy": {
+      "title": "Segurado por {total} pokemon",
+      "description": "Esses pokemons selvagens tem uma chance de segurara esses itens numa batalha"
+    }
+  },
   "table": {
     "name": "Nome",
     "types": "Tipo(s)"
@@ -147,7 +159,9 @@
       "languageTooltip": "Altera o idioma do aplicativo",
       "descriptionLanguage": "Idioma das descrições",
       "descriptionLanguageTooltip": "Altera o idioma das descrições dos dados",
-      "languageUpdate": "Idioma atualizado."
+      "languageUpdate": "Idioma atualizado.",
+      "english": "English",
+      "portuguese": "Português"
     },
     "artworkOptions": {
       "title": "Opções de Artes",

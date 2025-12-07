@@ -1,6 +1,6 @@
 import { locales } from "@/i18n/config";
 import { LanguageIcon } from "@heroicons/react/24/solid";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/router";
 import { ChangeEvent } from "react";
 import Select from "../shared/select";
@@ -8,10 +8,11 @@ import Select from "../shared/select";
 export default function LangSelect() {
   const router = useRouter();
   const locale = useLocale();
+  const t = useTranslations();
 
   const languages: Record<string, string> = {
-    en: "English",
-    "pt-BR": "Português",
+    en: t("settings.languageOptions.english"),
+    "pt-BR": t("settings.languageOptions.portuguese"),
   };
 
   const handleLangChange = (e: ChangeEvent<HTMLSelectElement>) => {

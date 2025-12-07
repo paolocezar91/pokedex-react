@@ -159,7 +159,9 @@
       "languageTooltip": "Changes the app language",
       "descriptionLanguage": "Description Language",
       "descriptionLanguageTooltip": "Changes the data description language",
-      "languageUpdate": "Language updated."
+      "languageUpdate": "Language updated.",
+      "english": "English",
+      "portuguese": "Português"
     },
     "artworkOptions": {
       "title": "Artwork Options",
